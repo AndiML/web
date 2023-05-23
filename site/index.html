@@ -1,29 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Simple Side Website</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
+  <title>Simple Website with Button</title>
+  <style>
+    #imageContainer {
+      display: none;
+    }
+  </style>
+  <script>
+    function showImage() {
+      var imageContainer = document.getElementById("imageContainer");
+      imageContainer.style.display = "block";
+    }
+  </script>
 </head>
 <body>
-  <header>
-    <h1>Welcome to My Side Simple Website</h1>
-  </header>
+  <h1>Simple Website with Button</h1>
 
-  <nav>
-    <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Contact</a></li>
-    </ul>
-  </nav>
+  <button onclick="showImage()">Click me (weif)</button>
 
-  <main>
-    <h2>About</h2>
-    <p>This is a simple website to demonstrate HTML and CSS.</p>
-  </main>
-
-  <footer>
-    <p>&copy; 2023 Simple Website. All rights reserved.</p>
-  </footer>
+  <div id="imageContainer">
+    <img src="ente.jpg" alt="Displayed Image">
+  </div>
 </body>
 </html>
