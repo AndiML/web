@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tic-Tac-Toe</title>
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+
+    td {
+      width: 100px;
+      height: 100px;
+      border: 1px solid #000;
+      text-align: center;
+      font-size: 40px;
+      cursor: pointer;
+    }
+
+    #game-board {
+      display: none;
+    }
+  </style>
+  <script>
+    var currentPlayer = "X";
+    var gameEnded = false;
+
+    function markCell(cell) {
+      if (cell.innerHTML === "" && !gameEnded) {
+        cell.innerHTML = currentPlayer;
+        checkWin();
+        switchPlayer();
+        if (currentPlayer === "O") {
+          makeComputerMove();
+        }
+      }
+    }
+
+    function switchPlayer() {
+      currentPlayer = currentPlayer === "X" ? "O" : "X";
+    }
+
+    function checkWin() {
+      var cells = document.getElementsByTagName("td");
+
+      // Winning combinations
+      var winCombinations = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+        [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+        [0, 4, 8], [2, 4, 6]              // Diagonals
+      ];
+
+      // Check if any winning combination is fulfilled
+      for (var i = 0; i < winCombinations.length; i++) {
+        var combination = winCombinations[i];
+        var a = cells[combination[0]].innerHTML;
+        var b = cells[combination[1]].innerHTML;
+        var c = cells[combination[2]].innerHTML;
+
+        if (a === b && b === c && a !== "") {
+          announceWinner(a);
+          return;
+        }
+      }
+
+      // Check if all cells are filled (game drawn)
+      var filledCells = Array.prototype.slice.call(cells).filter(function(cell) {
+        return cell.innerHTML !== "";
+      });
+      if (filledCells.length === cells.length) {
+        announceDraw();
+      }
+    }
+
+    function announceWinner(winner) {
+      gameEnded = true;
+      alert("Player " + winner + " wins!");
+      resetGame();
+    }
+
+    function announceDraw() {
+      gameEnded = true;
+      alert("It's a draw!");
+      resetGame();
+    }
+
+    function resetGame() {
+      var cells = document.getElementsByTagName("td");
+      for (var i = 0; i < cells.length; i++) {
+        cells[i].innerHTML = "";
+      }
+      gameEnded = false;
+      currentPlayer = "X";
+    }
+
+    function makeComputerMove() {
+      var cells = document.getElementsByTagName("td");
+      var emptyCells = Array.prototype.slice.call(cells).filter(function(cell) {
+        return cell.innerHTML === "";
+      });
+
+      // Choose a random empty cell for the computer's move
+      if (emptyCells.length > 0) {
+        var randomIndex = Math.floor(Math.random() * emptyCells.length);
+        var randomCell = emptyCells[randomIndex];
+        randomCell.innerHTML = currentPlayer;
+        checkWin();
+        switchPlayer();
+      }
+    }
+
+    function startGame() {
+      document.getElementById("start-button").style.display = "none";
+      document.getElementById("game-board").style.display = "block";
+    }
+  </script>
+</head>
+<body>
+  <h1>Tic-Tac-Toe</h1>
+
+  <button id="start-button" onclick="startGame()">Start Game</button>
+
+  <table id="game-board">
+    <tr>
+      <td onclick="markCell(this)"></td>
+      <td onclick="markCell(this)"></td>
+      <td onclick="markCell(this)"></td>
+    </tr>
+    <tr>
+      <td onclick="markCell(this)"></td>
+      <td onclick="markCell(this)"></td>
+      <td onclick="markCell(this)"></td>
+    </tr>
+    <tr>
+      <td onclick="markCell(this)"></td>
+      <td onclick="markCell(this)"></td>
+      <td onclick="markCell(this)"></td>
+    </tr>
+  </table>
+</body>
+</html>
